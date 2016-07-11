@@ -1,0 +1,197 @@
+<html>
+<title>wassp</title>
+<style type="text/css">
+#small-4 {
+  float: left;
+
+    min-height: 400px;
+    max-height: 400px;
+}
+
+img{
+    width:100%;
+    margin-right: 40px;
+    min-width: 300px;
+    max-width: 300px;
+}
+
+#one {
+	display: block;
+	word-wrap: break-word;
+    min-width: 100px;
+    max-width: 300px;
+}
+
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+ul.pagination li {display: inline;}
+
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+ul.pagination li a.active {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+}
+/*ul.pagination li button:hover:not(.active) {background-color: #ddd;}
+*/
+
+
+</style>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
+		<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.js"></script>
+<head>
+	<script type="text/javascript">
+
+	$(document).keydown(function(event){
+            if(event.keyCode == 13){
+            	mymet();
+            }
+        });
+
+	window.onload = function(){
+		//973083854922
+		if(!sessionStorage.myval){
+			sessionStorage.myval="Default";
+		}
+		if(!sessionStorage.pageno){
+			sessionStorage.pageno=0;
+		}
+		if(!sessionStorage.searchval){
+			return;
+		}
+		var elt = document.getElementById("test");
+		var val = elt.options[elt.selectedIndex].text;
+		var myurl = "//search.unbxdapi.com/f769cb347887923ccdf4bd948f8909e4/efavormart_com-u1458252543284/search?&q="+sessionStorage.searchval+"&rows=20&start="+sessionStorage.pageno;
+		var an_array=[];
+		if(sessionStorage.myval=="Default"){
+
+		}
+		else if(sessionStorage.myval=="asc"){
+			myurl = "//search.unbxdapi.com/f769cb347887923ccdf4bd948f8909e4/efavormart_com-u1458252543284/search?&q="+sessionStorage.searchval+"&sort=price%20asc&rows=20&start="+sessionStorage.pageno;
+			document.getElementById('test').selectedIndex=1;
+		}
+		else if(sessionStorage.myval=="dsc"){
+			myurl = "//search.unbxdapi.com/f769cb347887923ccdf4bd948f8909e4/efavormart_com-u1458252543284/search?&q="+sessionStorage.searchval+"&sort=price%20desc&rows=20&start="+sessionStorage.pageno;
+			document.getElementById('test').selectedIndex=2;
+		}
+		else if(sessionStorage.myval=="nasc"){
+			myurl = "//search.unbxdapi.com/f769cb347887923ccdf4bd948f8909e4/efavormart_com-u1458252543284/search?&q="+sessionStorage.searchval+"&sort=title%20asc&rows=20&start="+sessionStorage.pageno;
+			document.getElementById('test').selectedIndex=3;
+		}
+		else if(sessionStorage.myval=="ndsc"){
+			myurl = "//search.unbxdapi.com/f769cb347887923ccdf4bd948f8909e4/efavormart_com-u1458252543284/search?&q="+sessionStorage.searchval+"&sort=title%20desc&rows=20&start="+sessionStorage.pageno;
+			document.getElementById('test').selectedIndex=4;
+		}
+		$.ajax({
+			type: "GET",
+			dataType: 'jsonp',
+			jsonp: 'json.wrf',
+			url: myurl
+			}).done( function (data) {
+			sessionStorage.nopdts = Number(data["response"]["numberOfProducts"]) / 20;
+			an_array = data["response"]["products"];
+			if(an_array.length > 0){
+				var source   = $("#src").html();
+				var template = Handlebars.compile(source);
+				$("body").append(template({objects:an_array}) );
+			}
+			else{
+				document.getElementById("crossme").innerHTML = "Sorry No products found";
+			}
+		});	
+		updatel();
+	}
+	function updatel(){
+		document.getElementById("myl").innerHTML = Math.round(sessionStorage.nopdts);
+		document.getElementById("hidme").innerHTML = Math.round(sessionStorage.nopdts)-1;
+		//document.getElementById("nec").click();
+	}
+	function report(val){
+		sessionStorage.myval = val;
+		location.reload();
+	}
+	function fwd(a){
+		if(a=='l'){
+			sessionStorage.pageno = (Math.round(sessionStorage.nopdts) - 1) * 20;
+		}
+		else if(a=='ll'){
+			sessionStorage.pageno = (Math.round(sessionStorage.nopdts)) * 20;
+		}
+		else{
+			sessionStorage.pageno = a * 20;
+		}
+		location.reload();
+	}
+	function bckwd(){
+		if(sessionStorage.pageno==21){
+			sessionStorage.pageno = a * 20;
+			location.reload();
+		}
+	}
+	function mymet(){
+		sessionStorage.searchval = document.getElementById("greet").value;
+		location.reload();
+	}
+
+</script>
+
+</head>
+
+<body>
+<td style="width:25%"><label>Sort:</label>
+<select id="test" class="select" onchange="report(this.value)">
+<option value="Default" unbxdsortfield="" unbxdsortvalue="" selected="selected">Default</option>
+<option value="asc">Price Low to High</option>
+<option value="dsc">Price High to Low</option>
+<option value="nasc">Name (A-Z)</option>
+<option value="ndsc">Name (Z-A)</option>
+</select>
+</td>
+
+
+<ul class="pagination">
+  <li><button id="nec" onclick="fwd(0)">1</button></li>
+  <li><button onclick="fwd(1)">2</button></li>
+  <li><button onclick="fwd(2)">3</button></li>
+  <li>...</li>
+  <li><button id="hidme" style="visibility:none;" onclick="fwd(l)">10</button>
+  <li><button id="myl" onclick="fwd(ll)">12</button>
+</ul>
+
+<!-- <input 
+       onkeydown = "if (event.keyCode == 13)
+                        document.getElementById('btnSearch').click()"    
+/>
+ -->
+<label><input type="text" id="greet"/></label>
+<button id="btnSearch" onclick="mymet()">Search</button>
+<hr/>
+	
+<script type='text/template' id='src'>
+{{#each objects}}
+  <div id="small-4">
+    <div class="image-wrapper overlay-fade-in">
+      <img id="0" class="testit" src="{{imageUrl}}" />
+      <div class="image-overlay-content">
+        <span id="one">{{title}}</span>
+        <p id="2" class="price">{{price}}</p> 
+      </div>
+    </div>
+  </div>
+  {{/each}} 
+</script>
+<h5 id="crossme"></h5>
+</body>
+
+</html>
