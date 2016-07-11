@@ -1,0 +1,34 @@
+{
+   "myCart": [{
+      "title": "Moto X Play",
+      "id": 1,
+      "img": "http://www.motorola.com/sites/default/files/library/storage/products/moto-x-style/Moto_xstyle_blk_540.png",
+      "price": 20000
+   }, {
+      "title": "Sony Bluetooth Noise Cancelling Headset",
+      "id": 2,
+      "img": "http://sonyglobal.scene7.com/is/image/gwtprod/08c5a7c86cce325175f9079560922cf0?fmt=pjpeg&wid=658&bgcolor=F1F5F9&bgc=F1F5F9",
+      "price": 6999
+   }, {
+      "title": "Puma All Purpose Black Shoes",
+      "id": 3,
+      "img": "http://pumaecom.scene7.com/is/image/PUMAECOM/188693_01_01_PNA?$PUM_PDP$",
+      "price": 1559
+   }],
+   "recommendations": [{
+      "title": "Puma Regular Fit Men's Trousers",
+      "id": 4,
+      "img": "http://pumaecom.scene7.com/is/image/PUMAECOM/831288_01_PNA?$PUMA_GRID$",
+      "price": 1949
+   }, {
+      "title": "Sony PS3 12GB Console (Black)",
+      "id": 5,
+      "img": "http://www.sony.co.in/support/resources/en_IN/images/gwt/ps_4.png",
+      "price": 20999
+   }, {
+      "title": "Sony Bluetooth SRS Speakers",
+      "id": 6,
+      "img": "http://sonyglobal.scene7.com/is/image/gwtprod/cd6bfb2975e3158ce0f4e62cb2e95e8e?fmt=pjpeg&wid=330&bgcolor=F1F5F9&bgc=F1F5F9",
+      "price": 11269
+   }]
+}
